@@ -2,17 +2,36 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import MainApp from './containers/MainApp/MainApp'
+
+import { fetchColors } from './api'
+
 class App extends Component {
-  render() {
+  constructor () {
+    super()
+
+    this.state = {
+      backgroundColor: 'gray'
+    }
+
+    this.handleBackgroundColor = this.handleBackgroundColor.bind(this)
+  }
+
+  componentDidMount () {
+    fetchColors()
+      .then(({ data = [] }) => { this.setState({ dataSource: data }) })
+  }
+
+  handleBackgroundColor (color) {
+    console.log('handle background change')
+    this.setState({ backgroundColor: color })
+  }
+
+  render () {
+    const { backgroundColor } = this.state
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="App" style={{ backgroundColor: '#' + backgroundColor + '80' }}>
+        <MainApp dataSource={this.state.dataSource} onBackgroundChange={this.handleBackgroundColor} />
       </div>
     );
   }
