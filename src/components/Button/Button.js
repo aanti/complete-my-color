@@ -23,6 +23,11 @@ const ButtonContainer = styled.div`
   ${props => !props.pressed && css`
     box-shadow: rgba(0, 0, 0, 0.08) 0px 3px 10px, rgba(0, 0, 0, 0.16) 0px 3px 10px;
   `}
+  ${props => props.disabled && css`
+    color: #7a7a7a;
+    box-shadow: none;
+    cursor: not-allowed;
+  `}
 `
 
 class ClickableButton extends Component {
@@ -38,7 +43,10 @@ class ClickableButton extends Component {
   }
 
   handleMouseDown () {
-    this.setState({ pressed: true })
+    const { disabled } = this.props
+    if (!disabled) {
+      this.setState({ pressed: true })
+    }
   }
 
   handleMouseUp () {
@@ -50,9 +58,9 @@ class ClickableButton extends Component {
   }
 }
 
-const Button = ({ label, pressed, onClick, onMouseDown, onMouseUp }) => (
+const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouseUp }) => (
   <StyledButton onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
-    <ButtonContainer pressed={pressed}>
+    <ButtonContainer pressed={pressed} disabled={disabled}>
       {label}  
     </ButtonContainer>
   </StyledButton>

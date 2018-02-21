@@ -10,7 +10,7 @@ const Container = styled.div`
 
 const InputDiv = styled.div`
   position: relative;
-  padding: 12px 10px;
+  padding: 24px 10px;
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -25,11 +25,21 @@ const InputDiv = styled.div`
 `
 
 const StyledInput = styled.input`
+  position: absolute;
   border: none;
   outline: none;
   background: none;
   width: 100%;
 `
+
+const StyledChosed = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`
+
 const AnimatedDiv = styled.div`
   position: absolute;
   bottom: 0;
@@ -68,12 +78,17 @@ class TextField extends Component {
   }
 
   render () {
-    const { value } = this.props
+    const { value, selected, renderSelected } = this.props
+    console.log(selected)
     const { focused } = this.state
     return (
       <Container>
         <InputDiv>
-          <StyledInput value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+          {
+            (!selected)
+            ? <StyledInput value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+            : <StyledChosed onClick={() => this.props.onChange('')}>{renderSelected({ ...selected.value })}</StyledChosed>
+          }
           <AnimatedDiv focused={focused} />
         </InputDiv>
       </Container>

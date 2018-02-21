@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, extend } from 'styled-components'
 
 import TextField from '../TextField/TextField'
 import Button from '../Button/Button'
@@ -30,10 +30,14 @@ const MenuItemsContainer = styled.div`
   width: 100%;
 `
 
-const MenuItemContainer = styled.div`
+const StyledItem = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px 20px;
+  cursor: pointer;
+`
+
+const MenuItemContainer = StyledItem.extend`
   color: white;
   cursor: pointer;
   :hover {
@@ -50,11 +54,18 @@ const Color = styled.div`
   background-color: ${props => '#' + props.color};
 `
 
-const MenuItem = ({ text, value, onClick }) => (
+const MenuItem = ({ text, value, onClick = () => {} }) => (
   <MenuItemContainer onClick={onClick}>
     {text}
     <Color color={value} />
   </MenuItemContainer>
+)
+
+const SelectedItem = ({ name, hex }) => (
+  <StyledItem>
+    {name}
+    <Color color={hex} />
+  </StyledItem>
 )
 
 const MenuItems = ({ dataSource = [], onItemClick }) => (
@@ -73,7 +84,7 @@ class AutoComplete extends Component {
     super(props)
     this.state = {
         text: '',
-        chosen: {}
+        chosen: null
       }
 
     this.handleChange = this.handleChange.bind(this)
@@ -81,7 +92,7 @@ class AutoComplete extends Component {
   }  
 
   handleChange (text) {
-    this.setState({ text })
+    this.setState({ text, chosen: null })
   }
 
   handleItemClick (value, index) {
@@ -90,19 +101,19 @@ class AutoComplete extends Component {
       chosen: { value, index },
       text: ''
     })
-    onChange && onChange(value.hex)
+    //onChange && onChange(value.hex)
   }
 
   render () {
-    const { text } = this.state
+    const { text, chosen } = this.state
     const { dataSource, onChange } = this.props
     return (
       <Container>
         <AutoCompleteContainer>
-        <TextField value={text} onChange={this.handleChange} />
+        <TextField value={text} selected={chosen} renderSelected={SelectedItem} onChange={this.handleChange} />
         <MenuItems dataSource={filter(dataSource, text)} onItemClick={this.handleItemClick} />
       </AutoCompleteContainer>
-      <Button label="Apply" />
+      <Button label="Apply" disabled={!chosen} onClick={() => onChange(chosen.value.hex)} />
       </Container>
     )
   }
