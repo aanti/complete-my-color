@@ -2,8 +2,17 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
 import TextField from '../TextField/TextField'
+import Button from '../Button/Button'
 
 const Container = styled.div`
+  display: flex;
+  align-items: center;
+  > :last-child {
+    margin-left: 15px;
+  }
+`
+
+const AutoCompleteContainer = styled.div`
   background-color: #f8f8f830;
   position: relative;
   width: 400px;
@@ -89,8 +98,11 @@ class AutoComplete extends Component {
     const { dataSource, onChange } = this.props
     return (
       <Container>
+        <AutoCompleteContainer>
         <TextField value={text} onChange={this.handleChange} />
         <MenuItems dataSource={filter(dataSource, text)} onItemClick={this.handleItemClick} />
+      </AutoCompleteContainer>
+      <Button label="Apply" />
       </Container>
     )
   }

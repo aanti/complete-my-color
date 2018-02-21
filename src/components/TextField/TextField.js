@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 
-import { withValue } from '../../hoc/controlled'
-
 const Container = styled.div`
   background-color: #f2f2f230;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px 0;
 `
 
 const InputDiv = styled.div`
   position: relative;
-  padding: 10px;
-  width: 320px;
+  padding: 12px 10px;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
-  //background-color: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
   flex-direction: column;
   justify-content: center;
@@ -41,7 +38,7 @@ const AnimatedDiv = styled.div`
     width: 100%;
   `}
   height: 2px;
-  background-color: #3F51B5;
+  background-color: #DCE775;
   transition: width 0.2s linear;
 `
 
