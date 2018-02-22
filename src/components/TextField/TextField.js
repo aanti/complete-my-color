@@ -57,12 +57,7 @@ const AnimatedDiv = styled.div`
 class TextField extends Component {
   constructor () {
     super()
-    this.state = {
-      focused: false
-    }
     this.handleChange = this.handleChange.bind(this)
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
   }
 
   handleChange (e) {
@@ -71,24 +66,14 @@ class TextField extends Component {
     onChange && onChange(text)
   }
 
-  handleFocus () {
-    this.setState({ focused: true })
-  }
-
-  handleBlur () {
-    this.setState({ focused: false })
-  }
-
   render () {
-    const { value, selected, renderSelected } = this.props
-    console.log(selected)
-    const { focused } = this.state
+    const { focused, value, selected, renderSelected, onFocus, onBlur } = this.props
     return (
       <Container>
         <InputDiv>
           {
             (!selected)
-            ? <StyledInput autoFocus value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+            ? <StyledInput autoFocus value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={onFocus} onBlur={onBlur} />
             : <StyledChosed onClick={() => this.props.onChange('')}>{renderSelected({ ...selected.value })}</StyledChosed>
           }
           <AnimatedDiv focused={focused} />

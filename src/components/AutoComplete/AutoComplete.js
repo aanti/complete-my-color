@@ -50,10 +50,13 @@ class AutoComplete extends Component {
     this.state = {
         text: '',
         chosen: null,
-        hovered: -1
+        hovered: -1,
+        focused: false
       }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
     this.handleItemClick = this.handleItemClick.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleItemHover = this.handleItemHover.bind(this)
@@ -102,14 +105,22 @@ class AutoComplete extends Component {
     this.handleChange('')
     onChange(chosen.value.hex)
   }
+  
+  handleFocus () {
+    this.setState({ focused: true })
+  }
+
+  handleBlur () {
+    this.setState({ focused: false })
+  }
 
   render () {
-    const { text, chosen, hovered } = this.state
+    const { text, chosen, hovered, focused } = this.state
     const { dataSource, onChange } = this.props
     return (
       <Container onKeyDown={this.handleKeyDown}>
         <AutoCompleteContainer>
-        <TextField value={text} selected={chosen} renderSelected={SelectedItem} onChange={this.handleChange} />
+        <TextField value={text} selected={chosen} focused={focused} renderSelected={SelectedItem} onChange={this.handleChange} onBlur={this.handleBlur} onFocus={this.handleFocus} />
         <MenuItems dataSource={filter(dataSource, text)} text={text} hovered={hovered} onItemClick={this.handleItemClick} onItemHover={this.handleItemHover} />
       </AutoCompleteContainer>
       <Button label="Apply" disabled={!chosen} onClick={this.handleColorSubmit} />
