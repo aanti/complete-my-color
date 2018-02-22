@@ -88,7 +88,7 @@ class TextField extends Component {
         <InputDiv>
           {
             (!selected)
-            ? <StyledInput value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+            ? <StyledInput autoFocus value={value} placeholder="Start entering color name" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
             : <StyledChosed onClick={() => this.props.onChange('')}>{renderSelected({ ...selected.value })}</StyledChosed>
           }
           <AnimatedDiv focused={focused} />
