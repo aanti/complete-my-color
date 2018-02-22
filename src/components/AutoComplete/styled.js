@@ -26,9 +26,13 @@ export const MenuItemsContainer = styled.div`
   width: 100%;
 `
 
-export const StyledItem = styled.div`
+export const FlexDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+`
+
+export const StyledItem = FlexDiv.extend`
   padding: 15px 20px;
   cursor: pointer;
 `
@@ -47,4 +51,10 @@ export const Color = styled.div`
   border-radius: 50%;
   border: 1px solid gray;
   background-color: ${props => '#' + props.color};
+`
+
+export const HexSpan = styled.span`
+  padding: 0 20px;
+  color: #6f6f6f;
+  font-size: 14px;
 `

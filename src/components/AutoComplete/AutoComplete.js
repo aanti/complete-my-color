@@ -5,7 +5,7 @@ import reactStringReplace from 'react-string-replace'
 import TextField from '../TextField/TextField'
 import Button from '../Button/Button'
 
-import { Container, AutoCompleteContainer, StyledInput, MenuItemsContainer, StyledItem, MenuItemContainer, Color } from './styled'
+import { Container, AutoCompleteContainer, StyledInput, MenuItemsContainer, StyledItem, MenuItemContainer, Color, HexSpan, FlexDiv } from './styled'
 
 const renderColorName = (text, searchText) => {
   const splitted = reactStringReplace(text, searchText, (match) => (<b><u>{match}</u></b>))
@@ -19,7 +19,10 @@ const renderColorName = (text, searchText) => {
 const MenuItem = ({ text, value, hovered, searchText, onClick, onMouseOver }) => (
   <MenuItemContainer hovered={hovered} onClick={onClick} onMouseOver={onMouseOver}>
     <span>{renderColorName(text, searchText)}</span>
-    <Color color={value} />
+    <FlexDiv>
+      <HexSpan>{`#${value}`}</HexSpan>
+      <Color color={value} />
+    </FlexDiv>
   </MenuItemContainer>
 )
 
