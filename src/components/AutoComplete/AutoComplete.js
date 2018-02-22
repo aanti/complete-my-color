@@ -5,7 +5,17 @@ import reactStringReplace from 'react-string-replace'
 import TextField from '../TextField/TextField'
 import Button from '../Button/Button'
 
-import { Container, AutoCompleteContainer, StyledInput, MenuItemsContainer, StyledItem, MenuItemContainer, Color, HexSpan, FlexDiv } from './styled'
+import {
+  Container,
+  AutoCompleteContainer,
+  StyledInput,
+  MenuItemsContainer,
+  StyledItem,
+  MenuItemContainer,
+  Color,
+  HexSpan,
+  FlexDiv
+} from './styled'
 
 const renderColorName = (text, searchText) => {
   const splitted = reactStringReplace(text, searchText, (match) => (<b><u>{match}</u></b>))
@@ -37,7 +47,15 @@ const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover })
   <MenuItemsContainer>
     {
       dataSource
-        .map((d, i) => <MenuItem searchText={text} text={d.name} value={d.hex} hovered={hovered === i} onClick={() => onItemClick(d, i)} onMouseOver={() => onItemHover(d, i)} />)
+        .map((d, i) => (
+          <MenuItem
+            searchText={text}
+            text={d.name}
+            value={d.hex}
+            hovered={hovered === i}
+            onClick={() => onItemClick(d, i)} onMouseOver={() => onItemHover(d, i)}
+          />)
+        )
     }
   </MenuItemsContainer>
 )
@@ -93,7 +111,6 @@ class AutoComplete extends Component {
   }
 
   handleItemHover (value, index) {
-    console.log('handle item hover')
     this.setState({
       hovered: index
     })
@@ -120,8 +137,22 @@ class AutoComplete extends Component {
     return (
       <Container onKeyDown={this.handleKeyDown}>
         <AutoCompleteContainer>
-        <TextField value={text} selected={chosen} focused={focused} renderSelected={SelectedItem} onChange={this.handleChange} onBlur={this.handleBlur} onFocus={this.handleFocus} />
-        <MenuItems dataSource={filter(dataSource, text)} text={text} hovered={hovered} onItemClick={this.handleItemClick} onItemHover={this.handleItemHover} />
+        <TextField
+          value={text}
+          selected={chosen}
+          focused={focused}
+          renderSelected={SelectedItem}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+        />
+        <MenuItems
+          dataSource={filter(dataSource, text)}
+          text={text}
+          hovered={hovered}
+          onItemClick={this.handleItemClick}
+          onItemHover={this.handleItemHover}
+        />
       </AutoCompleteContainer>
       <Button label="Apply" disabled={!chosen} onClick={this.handleColorSubmit} />
       </Container>
