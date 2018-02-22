@@ -21,6 +21,8 @@ const InputDiv = styled.div`
   input {
     font-family: 'Roboto';
     font-size: 16px;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 `
 
