@@ -26,3 +26,4 @@ Simple as you see.
 - Code written in React with help of [Webpack](https://webpack.js.org/) module bunder,  [axios](https://github.com/axios/axios) for HTTP requests, styled with awesome [styled-components](https://www.styled-components.com) <3
 - UI components are self-written, which means, maybe they're not so pretty but at least I know exactly what's going on under the hood ;-)
 - Code is good tested, if you don't believe, type `yarn test --coverage`
+- I used [reselect](https://github.com/reactjs/reselect) in order to remove useless filter operations (data is now filtered only when dataset or text is changing)
