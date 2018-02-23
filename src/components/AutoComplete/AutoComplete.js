@@ -38,13 +38,16 @@ const MenuItem = ({ text, value, hovered, searchText, onClick, onMouseOver }) =>
 
 const SelectedItem = ({ name, hex }) => (
   <StyledItem>
-    {name}
-    <Color color={hex} />
+    <span>{name}</span>
+    <FlexDiv>
+      <HexSpan>{`#${hex}`}</HexSpan>
+      <Color color={hex} />
+    </FlexDiv>
   </StyledItem>
 )
 
 const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover }) => (
-  <MenuItemsContainer>
+  <MenuItemsContainer onClick={() => { console.log('tadam') }}>
     {
       dataSource
         .map((d, i) => (
@@ -86,6 +89,7 @@ class AutoComplete extends Component {
   }
 
   handleItemClick (value, index) {
+    console.log('handle item')
     const { onChange } = this.props
     this.setState({
       chosen: { value, index },
@@ -95,7 +99,6 @@ class AutoComplete extends Component {
   }
 
   handleKeyDown (e) {
-    console.log('handle key down')
     const { key } = e.nativeEvent
     const { dataSource } = this.props
     const { text, hovered } = this.state
@@ -119,7 +122,6 @@ class AutoComplete extends Component {
   handleColorSubmit () {
     const { onChange } = this.props
     const { chosen } = this.state
-    this.handleChange('')
     onChange(chosen.value.hex)
   }
   
@@ -128,6 +130,7 @@ class AutoComplete extends Component {
   }
 
   handleBlur () {
+    console.log('handle blur')
     this.setState({ focused: false })
   }
 
@@ -146,13 +149,16 @@ class AutoComplete extends Component {
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
         />
-        <MenuItems
+        {
+          focused && 
+          <MenuItems
           dataSource={filter(dataSource, text)}
           text={text}
           hovered={hovered}
           onItemClick={this.handleItemClick}
           onItemHover={this.handleItemHover}
         />
+        }
       </AutoCompleteContainer>
       <Button label="Apply" disabled={!chosen} onClick={this.handleColorSubmit} />
       </Container>

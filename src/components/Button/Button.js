@@ -40,6 +40,7 @@ class ClickableButton extends Component {
 
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleMouseDown () {
@@ -53,8 +54,23 @@ class ClickableButton extends Component {
     this.setState({ pressed: false })
   }
 
+  handleClick (...args) {
+    const { disabled, onClick } = this.props
+    if (!disabled) {
+      onClick(...args)
+    }
+  }
+
   render () {
-    return <Button {...this.props} pressed={this.state.pressed} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} />
+    return (
+      <Button
+        {...this.props}
+        pressed={this.state.pressed}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+        onClick={this.handleClick}
+      />
+    )
   }
 }
 

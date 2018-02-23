@@ -55,6 +55,6 @@ export const Color = styled.div`
 
 export const HexSpan = styled.span`
   padding: 0 20px;
-  color: #6f6f6f;
+  color: #575757;
   font-size: 14px;
 `

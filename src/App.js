@@ -23,7 +23,6 @@ class App extends Component {
   }
 
   handleBackgroundColor (color) {
-    console.log('handle background change')
     this.setState({ backgroundColor: color })
   }
 
