@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import AutoComplete from '../../components/AutoComplete/AutoComplete'
+import AutoComplete from '../AutoComplete/AutoComplete'
 
 const Container = styled.div`
   padding: 60px;
