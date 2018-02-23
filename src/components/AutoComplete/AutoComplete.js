@@ -46,7 +46,7 @@ const SelectedItem = ({ name, hex }) => (
 )
 
 const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover }) => (
-  <MenuItemsContainer onClick={() => { console.log('tadam') }}>
+  <MenuItemsContainer>
     {
       dataSource
         .map((d, i) => (

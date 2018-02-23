@@ -12,6 +12,7 @@ class TextField extends Component {
     const { onChange } = this.props
     const { srcElement: { value: text } } = e.nativeEvent
     onChange && onChange(text)
+  
   }
 
   render () {
