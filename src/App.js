@@ -17,7 +17,7 @@ class App extends Component {
     const { dataSource, backgroundColor } = this.props
     return (
       <div className="App" style={{ backgroundColor }}>
-        <MainApp dataSource={dataSource} />
+        <MainApp />
       </div>
     )
   }
@@ -30,7 +30,6 @@ App.defaultProps = {
 function mapStateToProps (state) {
   const { data, ui } = state
   return {
-    dataSource: data.dataset,
     backgroundColor: '#' + ui.backgroundColor + '80'
   }
 }

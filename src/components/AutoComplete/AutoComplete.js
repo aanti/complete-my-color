@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import reactStringReplace from 'react-string-replace'
+import { createSelector } from 'reselect'
 
 import { setBackgroundColor } from '../../actions/ui'
 import { changeText, selectListItem, focusTextField, hoverListItem } from '../../actions/autocomplete'
@@ -68,8 +69,6 @@ const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover })
   </MenuItemsContainer>
 )
 
-const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.name.includes(text)) : []
-
 class AutoComplete extends Component {
   constructor (props) {
     super(props)
@@ -108,13 +107,12 @@ class AutoComplete extends Component {
   handleKeyDown (e) {
     const { key } = e.nativeEvent
     const { dataSource, text, hovered, hoverListItem, selectListItem } = this.props
-    const filteredDataSource = filter(dataSource, text)
     if (key === 'ArrowUp') {
       hoverListItem(Math.max(hovered - 1, -1))
     } else if (key === 'ArrowDown') {
-      hoverListItem(Math.min(hovered + 1, filteredDataSource.length - 1))
+      hoverListItem(Math.min(hovered + 1, dataSource.length - 1))
     } else if (key === 'Enter' && hovered > -1) {
-      const chosen = filteredDataSource[hovered]
+      const chosen = dataSource[hovered]
       selectListItem(chosen, hovered)
     }
   }
@@ -148,7 +146,7 @@ class AutoComplete extends Component {
         {
           (focused) && (
             <MenuItems
-              dataSource={filter(dataSource, text)}
+              dataSource={dataSource}
               text={text}
               hovered={hovered}
               onItemClick={this.handleItemClick}
@@ -163,9 +161,22 @@ class AutoComplete extends Component {
   }
 }
 
+const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.name.includes(text)) : []
+
+const getDataset = state => state.data.dataset
+const getText = state => state.autocomplete.text
+
+const getFilteredDataSource = createSelector(
+  [getDataset, getText],
+  (data, text) => filter(data, text)
+)
+
 function mapStateToProps (state) {
-  const { autocomplete } = state
-  return { ...autocomplete }
+  const { autocomplete, data } = state
+  return {
+    ...autocomplete,
+    dataSource: getFilteredDataSource(state)
+    }
 }
 
 function mapDispatchToProps (dispatch) {
