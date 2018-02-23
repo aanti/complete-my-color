@@ -15,7 +15,7 @@ class TextField extends Component {
   }
 
   render () {
-    const { focused, value, selected, renderSelected, onFocus, onBlur } = this.props
+    const { focused, value, selected, renderSelected, onFocus } = this.props
     return (
       <Container>
         <InputDiv>
@@ -28,7 +28,6 @@ class TextField extends Component {
                 placeholder="Start entering color name"
                 onChange={this.handleChange}
                 onFocus={onFocus}
-                onBlur={onBlur}
               />
             : 
               <StyledChosed onClick={() => this.props.onChange('')}>

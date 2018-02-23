@@ -78,7 +78,6 @@ class AutoComplete extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
     this.handleItemClick = this.handleItemClick.bind(this)
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -145,12 +144,6 @@ class AutoComplete extends Component {
     this.setState({ focused: true })
   }
 
-  handleBlur (e) {
-    console.log(e, e.nativeEvent)
-    console.log('handle blur')
-    //this.setState({ focused: false })
-  }
-
   render () {
     const { text, chosen, hovered, focused } = this.state
     const { dataSource, onChange } = this.props
@@ -163,7 +156,6 @@ class AutoComplete extends Component {
           focused={focused}
           renderSelected={SelectedItem}
           onChange={this.handleChange}
-          onBlur={this.handleBlur}
           onFocus={this.handleFocus}
         />
         {
