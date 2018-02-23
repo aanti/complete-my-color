@@ -21,12 +21,6 @@ function getDataError (error) {
   }
 }
 
-function getDataRequest () {
-  return {
-    type: types.FETCH_DATA_REQUEST
-  }
-} 
-
 export function getData () {
   return (dispatch) => {
     dispatch(getDataRequest())

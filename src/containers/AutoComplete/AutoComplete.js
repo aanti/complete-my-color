@@ -46,7 +46,7 @@ class AutoComplete extends Component {
 
   handleKeyDown (e) {
     const { key } = e.nativeEvent
-    const { dataSource, text, hovered, hoverListItem, selectListItem } = this.props
+    const { dataSource, hovered, hoverListItem, selectListItem } = this.props
     if (key === 'ArrowUp') {
       hoverListItem(Math.max(hovered - 1, -1))
     } else if (key === 'ArrowDown') {
@@ -94,7 +94,7 @@ const getText = state => state.autocomplete.text
 const getFilteredDataSource = createSelector([getDataset, getText], filter)
 
 function mapStateToProps (state) {
-  const { autocomplete, data } = state
+  const { autocomplete } = state
   return {
     ...autocomplete,
     dataSource: getFilteredDataSource(state)

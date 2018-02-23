@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   render () {
-    const { dataSource, backgroundColor } = this.props
+    const { backgroundColor } = this.props
     return (
       <div className="App" style={{ backgroundColor }}>
         <MainApp />
@@ -28,7 +28,7 @@ App.defaultProps = {
 }
 
 function mapStateToProps (state) {
-  const { data, ui } = state
+  const { ui } = state
   return {
     backgroundColor: '#' + ui.backgroundColor + '80'
   }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import TextField from '../TextField/TextField'

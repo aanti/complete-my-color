@@ -10,8 +10,8 @@ export function data (state = initialState.data, action) {
       const { data } = action.payload
       return { ...state, dataset: data, status: fetchStatus.success }
     }
-    case types.FETCH_DATA_SUCCESS: {
-      return { ...state, status: fetchStatus.success }
+    case types.FETCH_DATA_ERROR: {
+      return { ...state, status: fetchStatus.error }
     }
     default:
       return state
