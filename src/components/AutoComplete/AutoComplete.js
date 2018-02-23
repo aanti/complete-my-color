@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import styled, { css, extend } from 'styled-components'
 import reactStringReplace from 'react-string-replace'
 
@@ -79,22 +80,37 @@ class AutoComplete extends Component {
     this.handleFocus = this.handleFocus.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
     this.handleItemClick = this.handleItemClick.bind(this)
+    this.handleOutsideClick = this.handleOutsideClick.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleItemHover = this.handleItemHover.bind(this)
     this.handleColorSubmit = this.handleColorSubmit.bind(this)
   }  
+
+  componentWillMount () {
+    document.addEventListener('click', this.handleOutsideClick, false)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick (e) {
+    if(!ReactDOM.findDOMNode(this.autocompleteRef).contains(e.target)) {
+      this.setState({ focused: false })
+    }
+  }
 
   handleChange (text) {
     this.setState({ text, chosen: null, hovered: -1 })
   }
 
   handleItemClick (value, index) {
-    console.log('handle item')
     const { onChange } = this.props
     this.setState({
       chosen: { value, index },
       text: '',
-      hovered: -1
+      hovered: -1,
+      focused: false
     })
   }
 
@@ -129,9 +145,10 @@ class AutoComplete extends Component {
     this.setState({ focused: true })
   }
 
-  handleBlur () {
+  handleBlur (e) {
+    console.log(e, e.nativeEvent)
     console.log('handle blur')
-    this.setState({ focused: false })
+    //this.setState({ focused: false })
   }
 
   render () {
@@ -139,7 +156,7 @@ class AutoComplete extends Component {
     const { dataSource, onChange } = this.props
     return (
       <Container onKeyDown={this.handleKeyDown}>
-        <AutoCompleteContainer>
+        <AutoCompleteContainer ref={el => this.autocompleteRef = el}>
         <TextField
           value={text}
           selected={chosen}
