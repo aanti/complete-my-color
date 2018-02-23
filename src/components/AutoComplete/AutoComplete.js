@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import styled, { css, extend } from 'styled-components'
 import reactStringReplace from 'react-string-replace'
 
 import TextField from '../TextField/TextField'
@@ -9,7 +8,6 @@ import Button from '../Button/Button'
 import {
   Container,
   AutoCompleteContainer,
-  StyledInput,
   MenuItemsContainer,
   StyledItem,
   MenuItemContainer,
@@ -104,7 +102,6 @@ class AutoComplete extends Component {
   }
 
   handleItemClick (value, index) {
-    const { onChange } = this.props
     this.setState({
       chosen: { value, index },
       text: '',
@@ -146,7 +143,7 @@ class AutoComplete extends Component {
 
   render () {
     const { text, chosen, hovered, focused } = this.state
-    const { dataSource, onChange } = this.props
+    const { dataSource } = this.props
     return (
       <Container onKeyDown={this.handleKeyDown}>
         <AutoCompleteContainer ref={el => this.autocompleteRef = el}>

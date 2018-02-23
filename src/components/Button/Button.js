@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
-import PropTypes from 'prop-types'
 
 const StyledButton = styled.button`
   padding: 0;
