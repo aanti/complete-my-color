@@ -93,7 +93,9 @@ const getText = state => state.autocomplete.text
 
 const getFilteredDataSource = createSelector(
   [getDataset, getText],
-  (data, text) => filter(data, text)
+  (data, text) => {
+    return text.length > 1 ? filter(data, text) : data
+  }
 )
 
 function mapStateToProps (state) {
