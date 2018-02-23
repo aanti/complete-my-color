@@ -12,9 +12,9 @@ const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
 `
 
-const MainApp = ({ dataSource, onBackgroundChange }) => (
+const MainApp = ({ dataSource }) => (
   <Container>
-    <AutoComplete dataSource={dataSource} onChange={onBackgroundChange} />
+    <AutoComplete dataSource={dataSource} />
   </Container>
 )
 

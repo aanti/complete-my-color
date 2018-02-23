@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import reactStringReplace from 'react-string-replace'
+
+import { setBackgroundColor } from '../../actions/ui'
+import { changeText, selectListItem, focusTextField, hoverListItem } from '../../actions/autocomplete'
 
 import TextField from '../TextField/TextField'
 import Button from '../Button/Button'
@@ -51,11 +56,12 @@ const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover })
       dataSource
         .map((d, i) => (
           <MenuItem
+            key={i}
             searchText={text}
             text={d.name}
             value={d.hex}
             hovered={hovered === i}
-            onClick={() => onItemClick(d, i)} onMouseOver={() => onItemHover(d, i)}
+            onClick={() => onItemClick(d, i)} onMouseOver={() => onItemHover(i)}
           />)
         )
     }
@@ -67,12 +73,6 @@ const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.
 class AutoComplete extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-        text: '',
-        chosen: null,
-        hovered: -1,
-        focused: false
-      }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleFocus = this.handleFocus.bind(this)
@@ -93,57 +93,47 @@ class AutoComplete extends Component {
 
   handleOutsideClick (e) {
     if(!ReactDOM.findDOMNode(this.autocompleteRef).contains(e.target)) {
-      this.setState({ focused: false })
+      this.props.focusTextField(false)
     }
   }
 
   handleChange (text) {
-    this.setState({ text, chosen: null, hovered: -1 })
+    this.props.changeText(text)
   }
 
   handleItemClick (value, index) {
-    this.setState({
-      chosen: { value, index },
-      text: '',
-      hovered: -1,
-      focused: false
-    })
+    this.props.selectListItem(value, index)
   }
 
   handleKeyDown (e) {
     const { key } = e.nativeEvent
-    const { dataSource } = this.props
-    const { text, hovered } = this.state
+    const { dataSource, text, hovered, hoverListItem, selectListItem } = this.props
     const filteredDataSource = filter(dataSource, text)
     if (key === 'ArrowUp') {
-      this.setState(({ hovered }) => ({ hovered: Math.max(hovered - 1, -1) }))
+      hoverListItem(Math.max(hovered - 1, -1))
     } else if (key === 'ArrowDown') {
-      this.setState(({ hovered }) => ({ hovered: Math.min(hovered + 1, filteredDataSource.length - 1) }))
+      hoverListItem(Math.min(hovered + 1, filteredDataSource.length - 1))
     } else if (key === 'Enter' && hovered > -1) {
       const chosen = filteredDataSource[hovered]
-      this.handleItemClick(chosen, hovered)
+      selectListItem(chosen, hovered)
     }
   }
 
-  handleItemHover (value, index) {
-    this.setState({
-      hovered: index
-    })
+  handleItemHover (index) {
+    this.props.hoverListItem(index)
   }
 
   handleColorSubmit () {
-    const { onChange } = this.props
-    const { chosen } = this.state
-    onChange(chosen.value.hex)
+    const { setBackgroundColor, chosen: { value: { hex } } } = this.props
+    setBackgroundColor(hex)
   }
   
   handleFocus () {
-    this.setState({ focused: true })
+    this.props.focusTextField(true)
   }
 
   render () {
-    const { text, chosen, hovered, focused } = this.state
-    const { dataSource } = this.props
+    const { dataSource, text, chosen, focused, hovered } = this.props
     return (
       <Container onKeyDown={this.handleKeyDown}>
         <AutoCompleteContainer ref={el => this.autocompleteRef = el}>
@@ -156,14 +146,15 @@ class AutoComplete extends Component {
           onFocus={this.handleFocus}
         />
         {
-          focused && 
-          <MenuItems
-          dataSource={filter(dataSource, text)}
-          text={text}
-          hovered={hovered}
-          onItemClick={this.handleItemClick}
-          onItemHover={this.handleItemHover}
-        />
+          (focused) && (
+            <MenuItems
+              dataSource={filter(dataSource, text)}
+              text={text}
+              hovered={hovered}
+              onItemClick={this.handleItemClick}
+              onItemHover={this.handleItemHover}
+            />
+          )
         }
       </AutoCompleteContainer>
       <Button label="Apply" disabled={!chosen} onClick={this.handleColorSubmit} />
@@ -172,4 +163,19 @@ class AutoComplete extends Component {
   }
 }
 
-export default AutoComplete
+function mapStateToProps (state) {
+  const { autocomplete } = state
+  return { ...autocomplete }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    setBackgroundColor,
+    changeText,
+    selectListItem,
+    focusTextField,
+    hoverListItem
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AutoComplete)

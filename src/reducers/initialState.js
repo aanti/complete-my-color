@@ -29,5 +29,10 @@ export default {
     dataset: [],
     status: fetchStatus.initial
   },
-  autocomplete: {}
+  autocomplete: {
+    text: '',
+    hovered: -1,
+    chosen: null,
+    focused: false
+  }
 }
