@@ -24,7 +24,7 @@ function getDataError (error) {
 export function getData () {
   return (dispatch) => {
     dispatch(getDataRequest())
-    fetchColors()
+    return fetchColors()
       .then(
         ({ data }) => {
           dispatch(getDataSuccess({ data }))

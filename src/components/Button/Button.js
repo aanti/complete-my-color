@@ -73,7 +73,7 @@ class ClickableButton extends Component {
   }
 }
 
-const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouseUp }) => (
+export const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouseUp }) => (
   <StyledButton onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
     <ButtonContainer pressed={pressed} disabled={disabled}>
       {label}  
@@ -82,7 +82,7 @@ const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouseUp }) =
 )
 
 Button.defaultProps = {
-  onClick: () => { console.log('on click') }
+  onClick: () => {}
 }
 
 export default ClickableButton

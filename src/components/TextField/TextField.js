@@ -6,13 +6,18 @@ class TextField extends Component {
   constructor () {
     super()
     this.handleChange = this.handleChange.bind(this)
+    this.handleClear = this.handleClear.bind(this)
   }
 
   handleChange (e) {
     const { onChange } = this.props
     const { srcElement: { value: text } } = e.nativeEvent
     onChange && onChange(text)
-  
+  }
+
+  handleClear () {
+    const { onChange } = this.props
+    onChange('')
   }
 
   render () {
@@ -22,18 +27,18 @@ class TextField extends Component {
         <InputDiv>
           {
             (!selected)
-            ?
-              <StyledInput
-                autoFocus
-                value={value}
-                placeholder="Start entering color name"
-                onChange={this.handleChange}
-                onFocus={onFocus}
-              />
-            : 
-              <StyledChosed onClick={() => this.props.onChange('')}>
-                {renderSelected({ ...selected.value })}
-              </StyledChosed>
+              ?
+                <StyledInput
+                  autoFocus
+                  value={value}
+                  placeholder="Start entering color name"
+                  onChange={this.handleChange}
+                  onFocus={onFocus}
+                />
+              : 
+                <StyledChosed onClick={this.handleClear}>
+                  {renderSelected({ ...selected.value })}
+                </StyledChosed>
           }
           <AnimatedDiv focused={focused} />
         </InputDiv>

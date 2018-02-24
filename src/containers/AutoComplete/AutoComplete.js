@@ -86,7 +86,7 @@ class AutoComplete extends Component {
   }
 }
 
-const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.name.includes(text)) : []
+export const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.name.includes(text)) : []
 
 const getDataset = state => state.data.dataset
 const getText = state => state.autocomplete.text
