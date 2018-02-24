@@ -23,7 +23,7 @@ export const fetchStatus = {
 
 export default {
   ui: {
-    backgroundColor: 'gray'
+    backgroundColor: '6f6f6f'
   },
   data: {
     dataset: [],

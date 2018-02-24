@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet' 
 
 import MainApp from './containers/MainApp/MainApp'
 
@@ -15,8 +16,10 @@ class App extends Component {
 
   render () {
     const { backgroundColor } = this.props
+    console.log(backgroundColor)
     return (
-      <div className="App" style={{ backgroundColor }}>
+      <div className="App">
+        <Helmet bodyAttributes={{ style: `background-color : ${backgroundColor}` }}/>
         <MainApp />
       </div>
     )
