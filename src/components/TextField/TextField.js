@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { Container, InputDiv, StyledInput, StyledChosed, AnimatedDiv } from './styled'
 
@@ -45,6 +46,14 @@ class TextField extends Component {
       </Container>
     )
   }
+}
+
+TextField.propTypes = {
+  focused: PropTypes.bool,
+  value: PropTypes.string,
+  selected: PropTypes.object,
+  renderSelected: PropTypes.func,
+  onFocus: PropTypes.func
 }
 
 export default TextField

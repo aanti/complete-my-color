@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -84,6 +85,19 @@ class AutoComplete extends Component {
       />
     )
   }
+}
+
+AutoComplete.propTypes = {
+  text: PropTypes.string,
+  hovered: PropTypes.number,
+  chosen: PropTypes.object,
+  focused: PropTypes.bool,
+  dataSource: PropTypes.array,
+  setBackgroundColor: PropTypes.func,
+  changeText: PropTypes.func,
+  selectListItem: PropTypes.func,
+  focusTextField: PropTypes.func,
+  hoverListItem: PropTypes.func
 }
 
 export const filter = (dataSource, text) => text.length > 1 ? dataSource.filter(d => d.name.includes(text)) : []

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types'
 
 const StyledButton = styled.button`
   padding: 0;
@@ -73,6 +74,12 @@ class ClickableButton extends Component {
   }
 }
 
+ClickableButton.propTypes = {
+  label: PropTypes.string,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func
+}
+
 export const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouseUp }) => (
   <StyledButton onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
     <ButtonContainer pressed={pressed} disabled={disabled}>
@@ -80,6 +87,15 @@ export const Button = ({ label, pressed, disabled, onClick, onMouseDown, onMouse
     </ButtonContainer>
   </StyledButton>
 )
+
+Button.propTypes = {
+  label: PropTypes.string,
+  pressed: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func
+}
 
 Button.defaultProps = {
   onClick: () => {}

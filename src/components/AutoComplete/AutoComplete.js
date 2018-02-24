@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import reactStringReplace from 'react-string-replace'
 
 import TextField from '../TextField/TextField'
@@ -34,6 +35,15 @@ export const MenuItem = ({ text, value, hovered, searchText, onClick, onMouseOve
   </MenuItemContainer>
 )
 
+MenuItem.propTypes = {
+  text: PropTypes.string,
+  value: PropTypes.string,
+  hovered: PropTypes.bool,
+  searchText: PropTypes.string,
+  onClick: PropTypes.func,
+  onMouseOver: PropTypes.func
+}
+
 export const SelectedItem = ({ name, hex }) => (
   <StyledItem>
     <span>{name}</span>
@@ -43,6 +53,11 @@ export const SelectedItem = ({ name, hex }) => (
     </FlexDiv>
   </StyledItem>
 )
+
+SelectedItem.propTypes = {
+  name: PropTypes.string,
+  hex: PropTypes.string
+}
 
 export const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemHover }) => (
   <MenuItemsContainer>
@@ -62,6 +77,14 @@ export const MenuItems = ({ dataSource = [], hovered, text, onItemClick, onItemH
     }
   </MenuItemsContainer>
 )
+
+MenuItems.propTypes = {
+  dataSource: PropTypes.array,
+  hovered: PropTypes.number,
+  text: PropTypes.string,
+  onItemClick: PropTypes.func,
+  onItemHover: PropTypes.func
+}
 
 const AutoComplete = ({ dataSource, text, chosen, focused, hovered, autoCompleteRef, ...rest }) => {
   const { onChange, onFocus, onItemClick, onItemHover, onSubmit, onKeyDown } = rest
@@ -91,6 +114,21 @@ const AutoComplete = ({ dataSource, text, chosen, focused, hovered, autoComplete
     <Button label="Apply" disabled={!chosen} onClick={onSubmit} />
     </Container>
   )
+}
+
+AutoComplete.propTypes = {
+  dataSource: PropTypes.array,
+  text: PropTypes.string,
+  chosen: PropTypes.object,
+  focused: PropTypes.bool,
+  hovered: PropTypes.number,
+  autoCompleteRef: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onItemClick: PropTypes.func,
+  onItemHover: PropTypes.func,
+  onSubmit: PropTypes.func,
+  onKeyDown: PropTypes.func
 }
 
 export default AutoComplete
