@@ -1,9 +1,7 @@
-
-
 ## Overview
 This simple app can help you choose a color (from autocomplete component) and after submitting, see the result as half-transparent `background-color` set for the root element.
-Color dataset is fetched from external source. When you start enter some letters (min. 2 chars), you see a list of colors with entered substring. 
-
+Color dataset is fetched from external source. When you start enter some letters (min. 2 chars), you see a list of colors with entered substring.
+  ![enter image description here](https://raw.githubusercontent.com/aanti/complete-my-color/master/public/screen.png)
 ## I want try it out!
 
 All you need to do to see and try it is just:
